@@ -1,14 +1,14 @@
 export default async function handler(req, res) {
-  const { token } = req.query;
-  if (!token) return res.status(400).json({ success: false, error: "Token required" });
-
   try {
-    const response = await fetch(`https://tempmail-backend.hasnaintariq142.workers.dev/api/inbox?token=${encodeURIComponent(token)}`, {
+    const response = await fetch("https://tempmail-backend.hasnaintariq142.workers.dev/api/delete-inbox", {
+      method: "POST",
       headers: {
+        "Content-Type": "application/json",
         "User-Agent": "Mozilla/5.0",
         "Origin": "https://tempmail.chat",
         "Referer": "https://tempmail.chat/"
-      }
+      },
+      body: JSON.stringify(req.body)
     });
     const data = await response.json();
     res.status(200).json(data);
