@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "rewrites": [
+    { "source": "/api/create", "destination": "/api/create.js" },
+    { "source": "/api/inbox", "destination": "/api/inbox.js" },
+    { "source": "/api/delete", "destination": "/api/delete.js" },
+    { "source": "/(.*)", "destination": "/public/index.html" }
+  ]
+}
