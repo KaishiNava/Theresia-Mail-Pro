@@ -6,19 +6,21 @@
   <title>Theresia Mail Pro</title>
   <style>
     :root {
-      --bg: #0a0a0a;
-      --card-bg: rgba(255, 255, 255, 0.03);
-      --card-border: rgba(255, 255, 255, 0.1);
-      --text-main: #ffffff;
-      --text-muted: #888888;
+      --bg: #050505;
+      --card-bg: rgba(255, 255, 255, 0.02);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-border-focus: rgba(255, 255, 255, 0.25);
+      --text-main: #f0f0f0;
+      --text-muted: #666666;
       --accent: #ffffff;
+      --radius: 12px;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
     }
 
     body {
@@ -26,92 +28,119 @@
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem 1rem;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 2.5rem 1rem;
       position: relative;
       overflow-x: hidden;
     }
 
-    /* K-Frame Grid Background */
+    /* Animated Minimalist Grid Background */
     body::before {
       content: "";
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      inset: 0;
       background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-      background-size: 40px 40px;
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 30px 30px;
       z-index: -2;
+      animation: pulseGrid 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulseGrid {
+      0% { opacity: 0.4; }
+      100% { opacity: 0.8; }
     }
 
     .container {
       width: 100%;
-      max-width: 900px;
+      max-width: 820px;
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 1.25rem;
+      animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-bottom: 0.5rem;
       border-bottom: 1px solid var(--card-border);
-      padding-bottom: 1.5rem;
     }
 
     h1 {
-      font-size: 2.2rem;
+      font-size: 1.5rem;
       font-weight: 700;
-      letter-spacing: -1px;
-      text-transform: uppercase;
+      letter-spacing: -0.5px;
+      background: linear-gradient(180deg, #fff 0%, #a1a1a1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     p.subtitle {
       color: var(--text-muted);
-      font-size: 0.9rem;
-      margin-top: 0.2rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
     }
 
     .card {
       background: var(--card-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--card-border);
-      border-radius: 8px;
-      padding: 1.5rem;
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .control-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+    .card:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
 
-    .email-box {
+    /* Control Panel Minimalist */
+    .email-wrapper {
       display: flex;
       gap: 0.5rem;
+      margin-bottom: 1rem;
       flex-wrap: wrap;
     }
 
-    input[type="text"] {
+    .input-box {
       flex: 1;
-      min-width: 250px;
-      background: rgba(0, 0, 0, 0.5);
+      min-width: 220px;
+      position: relative;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.4);
       border: 1px solid var(--card-border);
       color: var(--text-main);
-      padding: 0.75rem 1rem;
-      border-radius: 4px;
-      font-family: monospace;
-      font-size: 0.95rem;
+      padding: 0.7rem 1rem;
+      border-radius: 8px;
+      font-family: 'SF Mono', monospace, sans-serif;
+      font-size: 0.85rem;
       outline: none;
+      transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      border-color: var(--card-border-focus);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
     }
 
     .btn-group {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.4rem;
       flex-wrap: wrap;
     }
 
@@ -119,96 +148,135 @@
       background: var(--text-main);
       color: var(--bg);
       border: none;
-      padding: 0.75rem 1.25rem;
-      border-radius: 4px;
+      padding: 0.65rem 1rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
     }
 
     button:hover {
-      opacity: 0.85;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
     }
 
-    button.btn-secondary {
-      background: transparent;
+    button:active {
+      transform: translateY(0);
+    }
+
+    button.btn-subtle {
+      background: rgba(255, 255, 255, 0.05);
       color: var(--text-main);
       border: 1px solid var(--card-border);
     }
 
+    button.btn-subtle:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
     button.btn-danger {
-      background: transparent;
-      color: #ff5555;
-      border: 1px solid rgba(255, 85, 85, 0.3);
+      background: rgba(255, 59, 48, 0.1);
+      color: #ff453a;
+      border: 1px solid rgba(255, 59, 48, 0.2);
+    }
+
+    button.btn-danger:hover {
+      background: rgba(255, 59, 48, 0.2);
+      box-shadow: 0 4px 12px rgba(255, 59, 48, 0.15);
     }
 
     .status-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       color: var(--text-muted);
+      padding-top: 0.75rem;
       border-top: 1px solid var(--card-border);
-      padding-top: 1rem;
-      margin-top: 0.5rem;
-      flex-wrap: wrap;
-      gap: 0.5rem;
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
     }
 
     .pulse-dot {
-      display: inline-block;
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
-      background: #55ff55;
-      margin-right: 6px;
-      box-shadow: 0 0 8px #55ff55;
+      background: #30d158;
+      box-shadow: 0 0 8px #30d158;
+      animation: blink 2s infinite;
     }
 
     .pulse-dot.off {
-      background: #555555;
+      background: #555;
       box-shadow: none;
+      animation: none;
     }
 
-    .inbox-container {
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* Inbox Layout & Animation */
+    .inbox-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 1rem;
     }
 
-    @media(min-width: 768px) {
-      .inbox-container {
-        grid-template-columns: 300px 1fr;
+    @media(min-width: 680px) {
+      .inbox-grid {
+        grid-template-columns: 260px 1fr;
       }
     }
 
     .mail-list {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
-      max-height: 400px;
+      gap: 0.4rem;
+      max-height: 380px;
       overflow-y: auto;
     }
 
     .mail-item {
-      padding: 0.75rem 1rem;
+      padding: 0.65rem 0.85rem;
       border: 1px solid var(--card-border);
-      border-radius: 4px;
+      border-radius: 8px;
       cursor: pointer;
       background: rgba(0, 0, 0, 0.2);
+      transition: all 0.25s ease;
+      animation: slideIn 0.3s ease-out;
     }
 
-    .mail-item:hover {
-      border-color: var(--text-main);
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-10px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .mail-item:hover, .mail-item.active {
+      border-color: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateX(3px);
     }
 
     .mail-item .sender {
       font-weight: 600;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
+      color: #fff;
+      margin-bottom: 0.1rem;
     }
 
     .mail-item .subject {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: var(--text-muted);
       white-space: nowrap;
       overflow: hidden;
@@ -217,26 +285,49 @@
 
     .mail-viewer {
       border: 1px solid var(--card-border);
-      border-radius: 4px;
+      border-radius: 8px;
       padding: 1rem;
-      min-height: 300px;
-      background: rgba(0, 0, 0, 0.4);
+      min-height: 280px;
+      background: rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .mail-header {
       border-bottom: 1px solid var(--card-border);
       padding-bottom: 0.75rem;
-      margin-bottom: 1rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .mail-body {
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #ccc;
+      word-break: break-word;
+      overflow-y: auto;
+      max-height: 300px;
+    }
+
+    /* Style untuk link bawaan isi email agar serasi */
+    .mail-body a {
+      color: #fff !important;
+      text-decoration: underline;
     }
 
     .empty-state {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100%;
-      min-height: 200px;
+      flex: 1;
+      min-height: 180px;
       color: var(--text-muted);
-      font-size: 0.85rem;
+      font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 1px;
     }
@@ -246,42 +337,47 @@
 
   <div class="container">
     <header>
-      <h1>Theresia Mail Pro</h1>
-      <p class="subtitle">Simple structure, subtle depth, strong identity.</p>
+      <div>
+        <h1>Theresia Mail Pro</h1>
+        <p class="subtitle">Minimalist Temporary Email</p>
+      </div>
     </header>
 
-    <div class="card control-panel">
-      <div class="email-box">
-        <input type="text" id="emailDisplay" placeholder="Klik 'Generate Email'..." readonly>
+    <!-- Top Card -->
+    <div class="card">
+      <div class="email-wrapper">
+        <div class="input-box">
+          <input type="text" id="emailDisplay" placeholder="Klik 'Generate Email'..." readonly>
+        </div>
         <div class="btn-group">
-          <button id="btnCreate" onclick="handleCreate()">Generate Email</button>
-          <button class="btn-secondary" onclick="copyEmail()">Copy Email</button>
-          <button class="btn-secondary" onclick="copyDirectUrl()">Copy URL</button>
+          <button onclick="handleCreate()">Generate</button>
+          <button class="btn-subtle" onclick="copyEmail()">Email</button>
+          <button class="btn-subtle" onclick="copyDirectUrl()">URL</button>
           <button class="btn-danger" onclick="handleDelete()">Delete</button>
         </div>
       </div>
 
       <div class="status-bar">
-        <div>
+        <div class="status-indicator">
           <span id="statusDot" class="pulse-dot off"></span>
           <span id="statusText">Idle</span>
         </div>
         <div>
-          <span>Expired: </span><span id="expireText" style="color: var(--text-main); font-weight: 600;">-</span>
+          <span>Expired: </span><span id="expireText" style="color: var(--text-main); font-weight: 500;">-</span>
         </div>
       </div>
     </div>
 
+    <!-- Inbox Card -->
     <div class="card">
-      <div class="inbox-container">
-        <div>
-          <div style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
-            <span style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted);">Inbox</span>
-            <button class="btn-secondary" style="padding: 0.2rem 0.5rem; font-size: 0.75rem;" onclick="checkInbox()">Refresh</button>
-          </div>
-          <div class="mail-list" id="mailList">
-            <div class="empty-state">Belum Ada Pesan</div>
-          </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+        <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted);">Inbox</span>
+        <button class="btn-subtle" style="padding: 0.3rem 0.6rem; font-size: 0.7rem;" onclick="checkInbox()">Sync</button>
+      </div>
+
+      <div class="inbox-grid">
+        <div class="mail-list" id="mailList">
+          <div class="empty-state">Belum Ada Pesan</div>
         </div>
 
         <div class="mail-viewer" id="mailViewer">
@@ -296,9 +392,9 @@
     let currentEmail = null;
     let autoRefreshTimer = null;
     let cachedMessages = [];
+    let activeIndex = null;
 
     window.onload = () => {
-      // Deteksi Token dari URL Path (/email/TOKEN_DISINI)
       const pathParts = window.location.pathname.split('/');
       const tokenFromUrl = pathParts[2] || pathParts[1];
 
@@ -322,14 +418,13 @@
     }
 
     function formatExpiration(expireTimeStr) {
-      if (!expireTimeStr) return "24 Jam dari Pembuatan";
+      if (!expireTimeStr) return "24 Jam Active";
       const expDate = new Date(expireTimeStr);
       if (isNaN(expDate.getTime())) return expireTimeStr;
       
-      // Format tanggal & jam yang mudah dibaca
       return expDate.toLocaleDateString("id-ID", {
-        day: 'numeric', month: 'short', year: 'numeric'
-      }) + " - " + expDate.toLocaleTimeString("id-ID", {
+        day: 'numeric', month: 'short'
+      }) + ", " + expDate.toLocaleTimeString("id-ID", {
         hour: '2-digit', minute: '2-digit'
       }) + " WIB";
     }
@@ -345,14 +440,13 @@
           currentEmail = data.email;
 
           localStorage.setItem("tm_token", currentToken);
-          
-          // Update URL tanpa reload halaman (Dynamic Route Support)
           window.history.pushState({}, "", `/email/${currentToken}`);
 
           document.getElementById("emailDisplay").value = currentEmail;
           document.getElementById("expireText").innerText = formatExpiration(data.expires_at);
           
           cachedMessages = [];
+          activeIndex = null;
           renderMailList([]);
           renderMailDetail(null);
           
@@ -370,15 +464,15 @@
 
     async function loadExistingInbox(token) {
       setStatus("Syncing...", true);
-      document.getElementById("emailDisplay").value = "Memuat Email...";
+      document.getElementById("emailDisplay").value = "Syncing email...";
       
       const success = await checkInbox();
       if (success) {
         startAutoRefresh();
         setStatus("Active");
       } else {
-        setStatus("Token Expired/Invalid", false);
-        document.getElementById("emailDisplay").value = "Expired atau Token Salah";
+        setStatus("Expired / Off", false);
+        document.getElementById("emailDisplay").value = "Email Expired atau Tidak Ada";
       }
     }
 
@@ -396,8 +490,6 @@
           }
           if (data.expires_at) {
             document.getElementById("expireText").innerText = formatExpiration(data.expires_at);
-          } else {
-            document.getElementById("expireText").innerText = "24 Jam Active";
           }
 
           cachedMessages = data.messages || [];
@@ -407,7 +499,6 @@
           return false;
         }
       } catch (err) {
-        console.error("Inbox Check Failed:", err);
         return false;
       }
     }
@@ -453,7 +544,7 @@
       }
 
       container.innerHTML = messages.map((m, idx) => `
-        <div class="mail-item" onclick="selectMail(${idx})">
+        <div class="mail-item ${activeIndex === idx ? 'active' : ''}" onclick="selectMail(${idx})">
           <div class="sender">${m.sender_name || m.sender}</div>
           <div class="subject">${m.subject || "(Tanpa Subjek)"}</div>
         </div>
@@ -461,6 +552,8 @@
     }
 
     function selectMail(index) {
+      activeIndex = index;
+      renderMailList(cachedMessages);
       renderMailDetail(cachedMessages[index]);
     }
 
@@ -471,15 +564,15 @@
         return;
       }
 
-      const content = mail.html_body || mail.text_body || "<i>Tidak ada isi pesan.</i>";
+      const content = mail.html_body || mail.text_body || "<i>Pesan kosong.</i>";
 
       container.innerHTML = `
         <div class="mail-header">
-          <h3 style="margin-bottom:0.5rem;">${mail.subject || "(Tanpa Subjek)"}</h3>
-          <div style="font-size:0.8rem; color:var(--text-muted);">Dari: ${mail.sender_name ? `${mail.sender_name} &lt;${mail.sender}&gt;` : mail.sender}</div>
-          <div style="font-size:0.8rem; color:var(--text-muted);">Waktu: ${new Date(mail.received_at).toLocaleString('id-ID')}</div>
+          <h3 style="font-size: 0.95rem; margin-bottom: 0.3rem;">${mail.subject || "(Tanpa Subjek)"}</h3>
+          <div style="font-size: 0.75rem; color: var(--text-muted);">Dari: ${mail.sender_name ? `${mail.sender_name} &lt;${mail.sender}&gt;` : mail.sender}</div>
+          <div style="font-size: 0.75rem; color: var(--text-muted);">Waktu: ${new Date(mail.received_at).toLocaleString('id-ID')}</div>
         </div>
-        <div style="font-size:0.9rem; line-height:1.6;">${content}</div>
+        <div class="mail-body">${content}</div>
       `;
     }
 
@@ -487,14 +580,14 @@
       const val = document.getElementById("emailDisplay").value;
       if (!val || val.includes("...")) return;
       navigator.clipboard.writeText(val);
-      alert("Alamat email disalin!");
+      alert("Email berhasil disalin!");
     }
 
     function copyDirectUrl() {
       if (!currentToken) return alert("Generate email terlebih dahulu!");
       const directUrl = `${window.location.origin}/email/${currentToken}`;
       navigator.clipboard.writeText(directUrl);
-      alert("URL Langsung disalin! Anda bisa membuka email ini kapan saja via URL tersebut.");
+      alert("URL Email disalin!");
     }
   </script>
 </body>
